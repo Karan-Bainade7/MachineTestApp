@@ -1,0 +1,38 @@
+﻿@model IEnumerable<MachineTestApp.Models.Product>
+
+<h2>Product List</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.ProductName</td>
+                <td>@product.Category.CategoryName</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = product.ProductId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = product.ProductId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="@Url.Action("Create")" class="btn btn-primary">Add New Product</a>
+
+
+<nav>
+    <ul class="pagination">
+        @for (int i = 1; i <= Math.Ceiling((double)ViewBag.TotalCount / ViewBag.PageSize); i++)
+        {
+            <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+            </li>
+        }
+    </ul>
+</nav>
